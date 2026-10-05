@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import InputBox from '../components/input.component'
 // import googleIcon from "../imgs/google.png"
 import { Link, Navigate } from "react-router-dom"
@@ -9,10 +9,24 @@ import { storeInSession } from '../common/session'
 import { UserContext } from '../App'
 // import { authWithGoogle } from '../common/firebase'
 import { apiUrl } from "../common/server-url"
+import BeautySleep from '../components/beauty-sleep.component'
 const UserAuthForm = ({ type }) => {
 
     let { userAuth: { access_token }, setUserAuth } = useContext(UserContext)
+    const [pending, setPending] = useState(false)
+    const [beautyWait, setBeautyWait] = useState(false)
+
+    useEffect(() => {
+        if (!pending) {
+            setBeautyWait(false)
+            return
+        }
+        const timer = setTimeout(() => setBeautyWait(true), 1100)
+        return () => clearTimeout(timer)
+    }, [pending])
+
     const userAuthThroughServer = (serverRoute, formData) => {
+        setPending(true)
         axios.post(apiUrl(serverRoute), formData)
             .then(({ data }) => {
                 storeInSession("user", JSON.stringify(data))
@@ -22,6 +36,7 @@ const UserAuthForm = ({ type }) => {
             .catch(({ response }) => {
                 toast.error(response.data.error)
             })
+            .finally(() => setPending(false))
 
     }
 
@@ -117,12 +132,15 @@ const UserAuthForm = ({ type }) => {
                         />
 
                         <button
-                            className="btn-dark center mt-14"
+                            className="btn-dark center mt-14 disabled:opacity-50"
                             type="submit"
+                            disabled={pending}
                             onClick={handleSubmit}
                         >
-                            {type.replace("-", " ")}
+                            {pending ? "Please wait" : type.replace("-", " ")}
                         </button>
+
+                        {beautyWait ? <BeautySleep /> : null}
 
                         {/*
                         <div className="relative w-full flex items-center gap-2 my-10 opacity-10 uppercase text-black font-bold">

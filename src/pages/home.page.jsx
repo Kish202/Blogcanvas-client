@@ -5,6 +5,7 @@ import axios from "axios"
 import { Toaster, toast } from 'react-hot-toast'
 import { useState } from 'react'
 import Loader from '../components/loader.component'
+import BeautySleep from '../components/beauty-sleep.component'
 import BlogPostcard from '../components/blog-post.component'
 import MinimalBlogPost from '../components/nobanner-blog-post.component'
 import { activeTabRef } from '../components/inpage-navigation.component'
@@ -107,7 +108,7 @@ const HomePage = () => {
                             <>
                                 {
                                     blogs == null ? (
-                                        <Loader />)
+                                        <BeautySleep />)
                                         :
                                         (
                                             blogs.results.length ?
