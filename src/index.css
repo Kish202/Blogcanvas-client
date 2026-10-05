@@ -116,18 +116,6 @@
     }
 }
 
-.write-page{
-    --write-paper: #F3EEE6;
-}
-
-body[data-theme="dark"] .write-page{
-    --write-paper: #2B2926;
-}
-
-.write-paper{
-    background: var(--write-paper);
-}
-
 .ce-block__content, .ce-toolbar__content{
     max-width: 900px;
 }

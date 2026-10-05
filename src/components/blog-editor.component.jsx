@@ -168,35 +168,29 @@ const BlogEditor = () => {
                         gutter={8}
                         containerClassName="notification-toast"
                     />
-                    <div className='mx-auto max-w-[900px] w-full write-page'>
+                    <div className='mx-auto max-w-[900px] w-full '>
 
-                        <label htmlFor='uploadBanner' className='write-paper block cursor-pointer overflow-hidden rounded-md border border-dark-grey/25 hover:border-dark-grey'>
-                            <div className='aspect-video'>
-                                {banner.length ?
-                                    <img
-                                        src={banner}
-                                        className='w-full h-full object-cover'
-                                        onError={handleError}
-                                    /> :
-                                    <div className='w-full h-full'></div>}
-                            </div>
-                            <div className='write-paper flex items-center justify-center gap-3 py-4 px-4 border-t border-dark-grey/20 text-black'>
-                                <i className='fi fi-rr-picture text-xl'></i>
-                                <p className='font-medium text-xl'>Click to upload a banner image</p>
-                            </div>
-                            <input
-                                id='uploadBanner'
-                                type="file"
-                                accept='.png, .jpg, .jpeg'
-                                hidden
-                                onChange={handleBannerUpload}
-                            />
-                        </label>
+                        <div className='relative aspect-video bg-white border-4 border-grey hover:opacity-80'>
+                            <label htmlFor='uploadBanner'>
+                                <img
+                                    src={banner.length ? banner : (theme == "light" ? lightBanner : darkBanner)}
+                                    className='z-20'
+                                    onError={handleError}
+                                />
+                                <input
+                                    id='uploadBanner'
+                                    type="file"
+                                    accept='.png, .jpg, .jpeg'
+                                    hidden
+                                    onChange={handleBannerUpload}
+                                />
+                            </label>
+                        </div>
 
                         <textarea
                             value={title}
                             placeholder='Blog Title'
-                            className='write-paper text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight text-black placeholder:text-dark-grey px-3 py-2 rounded-md'
+                            className='text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight placeholder:opacity-40 bg-white'
                             onKeyDown={handleTitleKeyDown}
                             onChange={handleTitleChange}
                         ></textarea>
@@ -231,7 +225,7 @@ const BlogEditor = () => {
 
                         <hr className="w-full opacity-10 my-5" />
 
-                        <div id='textEditor' className='write-paper font-gelasio text-black rounded-md px-3 py-4'></div>
+                        <div id='textEditor' className='font-gelasio '></div>
 
                     </div>
                 </section>
