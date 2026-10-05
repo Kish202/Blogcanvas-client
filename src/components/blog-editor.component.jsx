@@ -170,13 +170,19 @@ const BlogEditor = () => {
                     />
                     <div className='mx-auto max-w-[900px] w-full '>
 
-                        <div className='relative aspect-video bg-white border-4 border-grey hover:opacity-80'>
-                            <label htmlFor='uploadBanner'>
+                        <div className='relative aspect-video bg-grey border-4 border-dashed border-dark-grey/40 hover:border-dark-grey'>
+                            <label htmlFor='uploadBanner' className='block h-full cursor-pointer'>
                                 <img
                                     src={banner}
                                     className='z-20'
                                     onError={handleError}
                                 />
+                                {!banner.length ?
+                                    <div className='absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-white/55 text-black pointer-events-none'>
+                                        <i className='fi fi-rr-picture text-3xl'></i>
+                                        <p className='font-medium text-xl'>Click to upload a banner image</p>
+                                        <p className='text-dark-grey text-base'>PNG or JPG</p>
+                                    </div> : ""}
                                 <input
                                     id='uploadBanner'
                                     type="file"
@@ -190,13 +196,13 @@ const BlogEditor = () => {
                         <textarea
                             value={title}
                             placeholder='Blog Title'
-                            className='text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight placeholder:opacity-40 bg-white'
+                            className='text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight text-black placeholder:text-dark-grey bg-white'
                             onKeyDown={handleTitleKeyDown}
                             onChange={handleTitleChange}
                         ></textarea>
                         <button
                             type="button"
-                            className='text-purple text-base mb-2 hover:underline flex items-center gap-2'
+                            className='text-black text-base mb-2 hover:underline flex items-center gap-2'
                             onClick={() => {
                                 if (!textEditor.isReady) return;
                                 textEditor.save().then(async (data) => {
@@ -225,7 +231,7 @@ const BlogEditor = () => {
 
                         <hr className="w-full opacity-10 my-5" />
 
-                        <div id='textEditor' className='font-gelasio '></div>
+                        <div id='textEditor' className='font-gelasio text-black'></div>
 
                     </div>
                 </section>

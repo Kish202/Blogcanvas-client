@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { subscribeServerSleep } from "../common/server-wake";
 
 const REST_LINES = [
-    "The salon is still lighting the candles.",
-    "Silk sheets. One more minute.",
-    "A gilded pause, then the doors open."
+    "The ink is still finding its first sentence.",
+    "A quiet page, then the words arrive.",
+    "The draft is still stretching its lines."
 ];
 
 const Crescent = ({ compact = false }) => (
@@ -65,7 +65,7 @@ const BeautySleep = ({ compact = false, waiting = true }) => {
             <Crescent />
             <p className="beauty-kicker">Beauty rest</p>
             <p className="beauty-line">
-                {lingering ? REST_LINES[line] : "Preparing the room…"}
+                {lingering ? REST_LINES[line] : "Lining up the first line…"}
             </p>
         </div>
     );

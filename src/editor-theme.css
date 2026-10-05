@@ -1,3 +1,27 @@
+#textEditor .ce-paragraph,
+#textEditor .cdx-block,
+#textEditor .ce-header,
+#textEditor .ce-block__content {
+    color: #242424;
+}
+
+#textEditor .ce-paragraph[data-placeholder]:empty::before {
+    color: #6B6B6B;
+    opacity: 1;
+    font-style: italic;
+}
+
+body[data-theme="dark"] #textEditor .ce-paragraph,
+body[data-theme="dark"] #textEditor .cdx-block,
+body[data-theme="dark"] #textEditor .ce-header,
+body[data-theme="dark"] #textEditor .ce-block__content {
+    color: #F3F3F3;
+}
+
+body[data-theme="dark"] #textEditor .ce-paragraph[data-placeholder]:empty::before {
+    color: #C8C8C8;
+}
+
 @media (min-width: 650px){
     
     body[data-theme="dark"] .ce-toolbar__plus path,

@@ -173,7 +173,7 @@ const PublishForm = () => {
             <button
               type="button"
               onClick={() => { setBlog({ ...blog, title: wildTitle }); setWildTitle(""); }}
-              className='mt-3 text-left text-purple hover:underline'
+              className='mt-3 text-left text-black hover:underline'
             >
               Wilder title: “{wildTitle}”
             </button> : ""}
