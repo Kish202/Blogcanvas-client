@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 import InputBox from '../components/input.component'
-import googleIcon from "../imgs/google.png"
+// import googleIcon from "../imgs/google.png"
 import { Link, Navigate } from "react-router-dom"
 import { Toaster, toast } from "react-hot-toast"
 import AnimationWrapper from '../common/page-animation'
 import axios from "axios"
 import { storeInSession } from '../common/session'
 import { UserContext } from '../App'
-import { authWithGoogle } from '../common/firebase'
+// import { authWithGoogle } from '../common/firebase'
 import { apiUrl } from "../common/server-url"
 const UserAuthForm = ({ type }) => {
 
@@ -60,22 +60,20 @@ const UserAuthForm = ({ type }) => {
         userAuthThroughServer(serverRoute, formData);
     }
 
-    const handleGoogleAuth = (e) => {
-        e.preventDefault();
-
-        authWithGoogle().then(user=>{
-            let serverRoute="/google-auth";
-            let formData={
-                access_token:user.accessToken
-            }
-            userAuthThroughServer(serverRoute,formData)
-        })
-        .catch(err=>{
-            toast.error('trouble logging through google');
-            return console.log(err);
-
-        })
-    }
+    // const handleGoogleAuth = (e) => {
+    //     e.preventDefault();
+    //     authWithGoogle().then(user=>{
+    //         let serverRoute="/google-auth";
+    //         let formData={
+    //             access_token:user.accessToken
+    //         }
+    //         userAuthThroughServer(serverRoute,formData)
+    //     })
+    //     .catch(err=>{
+    //         toast.error('trouble logging through google');
+    //         return console.log(err);
+    //     })
+    // }
 
     return (
         access_token ?
@@ -126,6 +124,7 @@ const UserAuthForm = ({ type }) => {
                             {type.replace("-", " ")}
                         </button>
 
+                        {/*
                         <div className="relative w-full flex items-center gap-2 my-10 opacity-10 uppercase text-black font-bold">
                             <hr className="w-1/2 border-black" />
                             <p>Or</p>
@@ -137,6 +136,7 @@ const UserAuthForm = ({ type }) => {
                             <img src={googleIcon} className='w-5' />
                             continue with google
                         </button>
+                        */}
 
                         {
                             type == "sign-in" ?
