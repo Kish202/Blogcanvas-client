@@ -168,35 +168,35 @@ const BlogEditor = () => {
                         gutter={8}
                         containerClassName="notification-toast"
                     />
-                    <div className='mx-auto max-w-[900px] w-full '>
+                    <div className='mx-auto max-w-[900px] w-full write-page'>
 
-                        <div className='relative aspect-video bg-grey border-4 border-dashed border-dark-grey/40 hover:border-dark-grey'>
-                            <label htmlFor='uploadBanner' className='block h-full cursor-pointer'>
-                                <img
-                                    src={banner}
-                                    className='z-20'
-                                    onError={handleError}
-                                />
-                                {!banner.length ?
-                                    <div className='absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-white/55 text-black pointer-events-none'>
-                                        <i className='fi fi-rr-picture text-3xl'></i>
-                                        <p className='font-medium text-xl'>Click to upload a banner image</p>
-                                        <p className='text-dark-grey text-base'>PNG or JPG</p>
-                                    </div> : ""}
-                                <input
-                                    id='uploadBanner'
-                                    type="file"
-                                    accept='.png, .jpg, .jpeg'
-                                    hidden
-                                    onChange={handleBannerUpload}
-                                />
-                            </label>
-                        </div>
+                        <label htmlFor='uploadBanner' className='write-paper block cursor-pointer overflow-hidden rounded-md border border-dark-grey/25 hover:border-dark-grey'>
+                            <div className='aspect-video'>
+                                {banner.length ?
+                                    <img
+                                        src={banner}
+                                        className='w-full h-full object-cover'
+                                        onError={handleError}
+                                    /> :
+                                    <div className='w-full h-full'></div>}
+                            </div>
+                            <div className='write-paper flex items-center justify-center gap-3 py-4 px-4 border-t border-dark-grey/20 text-black'>
+                                <i className='fi fi-rr-picture text-xl'></i>
+                                <p className='font-medium text-xl'>Click to upload a banner image</p>
+                            </div>
+                            <input
+                                id='uploadBanner'
+                                type="file"
+                                accept='.png, .jpg, .jpeg'
+                                hidden
+                                onChange={handleBannerUpload}
+                            />
+                        </label>
 
                         <textarea
                             value={title}
                             placeholder='Blog Title'
-                            className='text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight text-black placeholder:text-dark-grey bg-white'
+                            className='write-paper text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight text-black placeholder:text-dark-grey px-3 py-2 rounded-md'
                             onKeyDown={handleTitleKeyDown}
                             onChange={handleTitleChange}
                         ></textarea>
@@ -231,7 +231,7 @@ const BlogEditor = () => {
 
                         <hr className="w-full opacity-10 my-5" />
 
-                        <div id='textEditor' className='font-gelasio text-black'></div>
+                        <div id='textEditor' className='write-paper font-gelasio text-black rounded-md px-3 py-4'></div>
 
                     </div>
                 </section>

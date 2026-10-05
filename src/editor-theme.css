@@ -3,6 +3,7 @@
 #textEditor .ce-header,
 #textEditor .ce-block__content {
     color: #242424;
+    background: transparent;
 }
 
 #textEditor .ce-paragraph[data-placeholder]:empty::before {
