@@ -16,6 +16,7 @@ const InputBox = ({ name, type, id, icon, value, placeholder,disable=false }) =>
                 disabled={disable}
                 className="input-box"
                 
+                
             />
             <i className={"fi " + icon + " input-icon"}></i>
             {
