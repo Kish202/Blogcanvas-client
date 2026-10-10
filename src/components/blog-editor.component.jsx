@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import darkLogo from "../imgs/logo-dark.png"
 import lightLogo from "../imgs/logo-light.png"
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -21,27 +21,28 @@ const BlogEditor = () => {
     let { blog, blog: { title, banner, content, tags, des }, setBlog, textEditor, setTextEditor, setEditorState } = useContext(EditorContext);
     let { userAuth: { access_token } } = useContext(UserContext);
     let navigate = useNavigate();
+    const [bannerUploading, setBannerUploading] = useState(false);
 
     const handleBannerUpload = (e) => {
         let img = e.target.files[0];
-        let loadingToast = toast.loading("Uploading...");
-        if (img) {
-
-            uploadImage(img).then((url) => {
-                if (url) {
-                    toast.dismiss(loadingToast);
-                    toast.success("Uploaded 🫡")
-                    setBlog({ ...blog, banner: url })
-                }
-            }).catch(err => {
-                toast.dismiss(loadingToast);
-                return toast.error(err);
-            })
-        }
-        else {
-            toast.dismiss(loadingToast);
+        if (!img) {
             toast.error("Banner Not Selected 😣")
+            return;
         }
+
+        setBannerUploading(true);
+        uploadImage(img).then((url) => {
+            if (url) {
+                setBlog({ ...blog, banner: url })
+            } else {
+                toast.error("Upload failed")
+            }
+        }).catch(err => {
+            toast.error(err?.message || "Upload failed")
+        }).finally(() => {
+            setBannerUploading(false);
+            e.target.value = "";
+        })
     }
 
     const handleTitleKeyDown = (e) => {
@@ -50,13 +51,31 @@ const BlogEditor = () => {
         }
     }
 
-    const handleTitleChange = (e) => {
-        let input = e.target;
-        input.style.height = 'auto';
-        input.style.height = input.scrollHeight + "px";
-
-        setBlog({ ...blog, title: input.value })
+    const fitTitleHeight = (el) => {
+        if (!el || !el.clientWidth) return;
+        el.style.transition = "none";
+        el.style.height = "auto";
+        el.style.height = `${Math.max(el.scrollHeight, 80)}px`;
     }
+
+    const handleTitleChange = (e) => {
+        fitTitleHeight(e.target);
+        setBlog({ ...blog, title: e.target.value })
+    }
+
+    useEffect(() => {
+        const el = document.getElementById("blogTitle");
+        if (!el) return;
+
+        const fit = () => fitTitleHeight(el);
+        const id = requestAnimationFrame(fit);
+        document.fonts?.ready?.then(fit);
+        window.addEventListener("resize", fit);
+        return () => {
+            cancelAnimationFrame(id);
+            window.removeEventListener("resize", fit);
+        };
+    }, [title])
 
     const handleError = (e) => {
         let img = e.target;
@@ -171,7 +190,7 @@ const BlogEditor = () => {
                     <div className='mx-auto max-w-[900px] w-full '>
 
                         <div className='relative aspect-video bg-white border-4 border-grey hover:opacity-80'>
-                            <label htmlFor='uploadBanner'>
+                            <label htmlFor='uploadBanner' className='block h-full'>
                                 <img
                                     src={banner.length ? banner : (theme == "light" ? lightBanner : darkBanner)}
                                     className='z-20'
@@ -182,15 +201,23 @@ const BlogEditor = () => {
                                     type="file"
                                     accept='.png, .jpg, .jpeg'
                                     hidden
+                                    disabled={bannerUploading}
                                     onChange={handleBannerUpload}
                                 />
                             </label>
                         </div>
+                        {bannerUploading ?
+                            <div className='flex items-center justify-center gap-3 mt-3 text-black'>
+                                <span className='quiet-ring is-compact'></span>
+                                <p className='font-medium text-xl'>Uploading...</p>
+                            </div> : ""}
 
                         <textarea
+                            id='blogTitle'
                             value={title}
+                            rows={1}
                             placeholder='Blog Title'
-                            className='text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight placeholder:opacity-40 bg-white'
+                            className='blog-title-input text-4xl font-medium w-full min-h-20 outline-none resize-none mt-10 mb-4 leading-snug placeholder:opacity-40 bg-white'
                             onKeyDown={handleTitleKeyDown}
                             onChange={handleTitleChange}
                         ></textarea>
